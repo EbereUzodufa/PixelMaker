@@ -3,34 +3,6 @@
 
 // When size is submitted by the user, call makeGrid()
 
-// function makeGrid() {
-// 	// Your code goes here!
-// 	//alert(Hi);
-// 	// const tableHeight;
-// 	// const tableWidth;
-// 	$('table').children().remove();
-// 	tableHeight = $('#inputHeight').val();
-// 	tableWidth = $('#inputWeight').val();
-// 	$('#pixelCanvas').append('<tbody></tbody>');
-// 	for(i=1; i<=tableHeight; i++){
-// 		$('tbody').prepend('<tr></tr>');
-// 		//alert('Hi, '+ tableHeight + ';'+ tableWidth);	
-
-// 		for(j=1; j<=tableWidth; j++){
-// 			$('tr').first().prepend('<td id="cell"></td>');
-// 		}
-// 	}
-// }
-
-// $(function(){
-// 	alert("test pass")
-// 	if (tableHeight === undefined || tableWidth === undefined ) {
-// 		alert("undefined")
-// 	}
-// 	else{
-// 		alert('Height ' + tableHeight + '\n' + 'Width ' + tableWidth)
-// 	}
-// })
 
 $('#inputButton').on('click',function makeGrid() {
 	//alert("aSome");
@@ -51,16 +23,171 @@ $('#inputButton').on('click',function makeGrid() {
 	$('#inputHeight').text(tableHeight)
 	$('#inputWeight').text(tableWidth);
 
+
+	
+
 	$("td").on('click', function(event) {
 		event.preventDefault();
 		//alert("Cell");
-		if ($(this).css("background-color")!=($('#colorPicker').val())) {
+		//$(this).css("background-color",$('#colorPicker').val());
+		//alert( $(this).css("background-color"));
+
+		var cox = $(this).css("background-color");
+		//alert(cox);
+		//alert(cox);
+		// if ($(this).css("background-color")!=($('#colorPicker').val())) {
+		// 	$(this).css("background-color",$('#colorPicker').val());
+		// 	//alert("aSome");
+		// }
+		// else{
+		// 	$(this).css("background-color",'transparent');
+		// 	//alert("aSomeA");
+		// }
+
+		function codeHex(hexa){
+			if (hexa==10) {
+				return "a";
+			}
+			else if (hexa==11) {
+				return "b";
+			}
+			else if (hexa==12) {
+				return "c";
+			}
+			else if (hexa==13) {
+				return "d";
+			}
+			else if (hexa==14) {
+				return "e";
+			}
+			else if (hexa==15) {
+				return "f";
+			}
+			else{
+				return hexa.toString();
+			}
+		}
+
+		if (cox.includes('rgba')===true) {
 			$(this).css("background-color",$('#colorPicker').val());
-			//alert("aSome");
 		}
 		else{
-			$(this).css("background-color",'transparent');
-			//alert("aSomeA");
+			var cut1 = cox.slice(4);
+			//cut1 = cut1.slice(1);
+			var lastChar = cut1.indexOf(')');
+			//alert(cut1);
+			//alert(lastChar);
+			var cut2 = cut1.slice(0, lastChar);
+			//alert(cut2);
+			var charSpace1 = cut2.indexOf(',');
+			//alert(charSpace1);
+			var r = cut2.slice(0, charSpace1);
+			cut2 = cut2.slice(charSpace1+2);
+			//alert(cut2);
+			var charSpace2 = cut2.indexOf(',');
+			//alert(charSpace2);
+			var g = cut2.slice(0, charSpace2);		
+			var b = cut2.slice(charSpace2+2, cut2.length);
+
+			// alert('R=' + r);
+			// alert('G=' + g);
+			// alert('b=' + b);
+			r=parseInt(r);
+			g=parseInt(g);
+			b=parseInt(b);
+			//alert(r+g+b);
+			//alert($('#colorPicker').val());
+			//alert(parseInt(r) + parseInt(g) + parseInt(b));
+
+			var rCode;
+			var gCode;
+			var bCode;
+
+			if (r<10) {
+				rCode = "0"+r;
+			}
+			else if (r>10 && r<16) {
+				rCode = r.toString();
+			}
+			else{
+				var rCodeDec = r % 16;
+				var rCodeInt = (r - rCodeDec)/16;
+				rCode = codeHex(rCodeInt) + codeHex(rCodeDec);
+			}
+
+			if (g<10) {
+				gCode = "0"+r;
+			}
+			else if (g>10 && g<16) {
+				gCode = g.toString();
+			}
+			else{
+				var gCodeDec = g % 16;
+				var gCodeInt = (g - gCodeDec)/16;
+				gCode = codeHex(gCodeInt) + codeHex(gCodeDec);
+			}
+
+			if (b<10) {
+				bCode = "0"+b;
+			}
+			else if (b>10 && b<16) {
+				bCode = b.toString();
+			}
+			else{
+				var bCodeDec = b % 16;
+				var bCodeInt = (b - bCodeDec)/16;
+				bCode = codeHex(bCodeInt) + codeHex(bCodeDec);
+			}
+
+			// alert("rCode= " + rCode);
+			// alert("gCode= " + gCode);
+			// alert("bCode= " + bCode);
+
+			//alert("Color Picker= "+ $('#colorPicker').val() + "\nColor Code= #"+rCode + gCode + bCode);
+
+			var ColorPicker = $('#colorPicker').val();
+			var colorCode = "#"+rCode + gCode + bCode;
+
+			//alert("Color Picker= "+ ColorPicker + "\nColor Code= " + colorCode);
+
+			if (ColorPicker === colorCode) {
+				//alert("Same");
+				$(this).css("background-color",'transparent');
+			}
+			else{
+				//alert("Not Same");
+				$(this).css("background-color",$('#colorPicker').val());
+			}
+
 		}
+
+		
+		// if ($(this).css("background-color")!=($('#colorPicker').val())) {
+		// 	$(this).css("background-color",$('#colorPicker').val());
+		// 	//alert("aSome");
+		// }
+		// else{
+		// 	$(this).css("background-color",'transparent');
+		// 	//alert("aSomeA");
+		// }
+
+		// var gbLen = cut2.length - charSpace1;
+		// alert(gbLen);
+		// var gb = cut2.slice(charSpace1+2, gbLen-2); //for ", "
+		// alert(gb);
+
 	});
+
+	$('#try').on('click', function(event) {
+		event.preventDefault();
+		/* Act on the event */
+		var cox = $('#colorPicker').val();
+		alert(cox);
+	});
+
+	// $("#colorPicker").on('click', function(event) {
+	// 	event.preventDefault();
+	// 	/* Act on the event */
+	// 	alert($('#colorPicker').val());
+	// });
 });
