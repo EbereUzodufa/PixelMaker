@@ -160,30 +160,14 @@ $('#inputButton').on('click',function makeGrid() {
 			}
 
 		}
-
-		
-		// if ($(this).css("background-color")!=($('#colorPicker').val())) {
-		// 	$(this).css("background-color",$('#colorPicker').val());
-		// 	//alert("aSome");
-		// }
-		// else{
-		// 	$(this).css("background-color",'transparent');
-		// 	//alert("aSomeA");
-		// }
-
-		// var gbLen = cut2.length - charSpace1;
-		// alert(gbLen);
-		// var gb = cut2.slice(charSpace1+2, gbLen-2); //for ", "
-		// alert(gb);
-
 	});
 
-	$('#try').on('click', function(event) {
-		event.preventDefault();
-		/* Act on the event */
-		var cox = $('#colorPicker').val();
-		alert(cox);
-	});
+	// $('#try').on('click', function(event) {
+	// 	event.preventDefault();
+	// 	 Act on the event 
+	// 	var cox = $('#colorPicker').val();
+	// 	alert(cox);
+	// });
 
 	// $("#colorPicker").on('click', function(event) {
 	// 	event.preventDefault();
